@@ -2,8 +2,8 @@ package library.domain;
 
 public class Admin {
 
-    private final String username = "admin";
-    private final String password = "1234";
+    private static final String username = "admin";
+    private static final String password = "1234";
     private boolean loggedIn = false;
 
     public boolean login(String user, String pass) {
