@@ -48,8 +48,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B jacoco:prepare-agent verify \
-             org.sonarsource.scanner.maven:sonar-maven-plugin:5.5.0.6356:sonar \
-             jacoco:report \
-             -Dsonar.coverage.exclusions=**/main.java \
-             -Dsonar.projectKey=librarysystemteam_softwareproject
+        run: mvn -B jacoco:prepare-agent verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar jacoco:report -Dsonar.coverage.exclusions=**/main.java -Dsonar.projectKey=librarysystemteam_softwareproject
