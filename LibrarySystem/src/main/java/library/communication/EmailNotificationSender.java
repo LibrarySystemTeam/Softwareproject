@@ -15,7 +15,7 @@ public class EmailNotificationSender implements NotificationSender {
 
     /** Google App Password (NOT the Gmail password) */
     private final String senderPassword = System.getenv("EMAIL_APP_PASSWORD");
-
+    private static final Logger logger = Logger.getLogger(EmailNotificationSender.class.getName());
 
     @Override
     public void send(String toEmail, String message) {
@@ -45,7 +45,8 @@ public class EmailNotificationSender implements NotificationSender {
             System.out.println("Email Sent Successfully to: " + toEmail);
 
         } catch (Exception e) {
-            System.out.println("Failed to send email.");
+        	logger.severe("Failed to send email");
+
             e.printStackTrace();
         }
     }
