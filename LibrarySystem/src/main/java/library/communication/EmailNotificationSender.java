@@ -14,7 +14,8 @@ public class EmailNotificationSender implements NotificationSender {
     private final String senderEmail = "batoolmasri408@gmail.com";
 
     /** Google App Password (NOT the Gmail password) */
-    private final String senderPassword = "obhlezzraufrqspr";
+    private final String senderPassword = System.getenv("EMAIL_APP_PASSWORD");
+
 
     @Override
     public void send(String toEmail, String message) {
