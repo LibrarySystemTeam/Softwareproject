@@ -190,15 +190,23 @@ public class LoanService {
 
     /** Returns true if the user has any overdue books or CDs. */
     public boolean userHasAnyOverdue(User user) {
-
-        boolean books = loanRepo.getAllBookLoans().stream()
-                .anyMatch(l -> l.getUser().getId().equals(user.getId()) && isOverdue(l));
-
-        boolean cds = loanRepo.getAllCDLoans().stream()
-                .anyMatch(l -> l.getUser().getId().equals(user.getId()) && isOverdue(l));
-
-        return books || cds;
+        return userHasOverdueBooks(user) || userHasOverdueCDs(user);
     }
+
+    private boolean userHasOverdueBooks(User user) {
+        return loanRepo.getAllBookLoans().stream()
+                .anyMatch(l -> isLoanOfUser(l, user) && isOverdue(l));
+    }
+
+    private boolean userHasOverdueCDs(User user) {
+        return loanRepo.getAllCDLoans().stream()
+                .anyMatch(l -> isLoanOfUser(l, user) && isOverdue(l));
+    }
+
+    private boolean isLoanOfUser(Loan loan, User user) {
+        return loan.getUser().getId().equals(user.getId());
+    }
+
 
     /** Returns all overdue book loans. */
     public List<Loan> getOverdueBookLoans() {
