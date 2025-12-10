@@ -37,6 +37,9 @@ public class LoanService {
 
     private LoanRepository loanRepo;
     private Clock clock;
+    private static final int BOOK_LOAN_DAYS = 28;
+    private static final int CD_LOAN_DAYS = 7;
+
 
     /** Constructs using the system clock. */
     public LoanService(LoanRepository repo) {
@@ -53,10 +56,6 @@ public class LoanService {
     private LocalDate today() {
         return LocalDate.now(clock);
     }
-
-    // ============================================================
-    //                      BORROW BOOK
-    // ============================================================
 
     /**
      * Borrows a book for 28 days.
@@ -83,7 +82,7 @@ public class LoanService {
             throw new IllegalStateException("Book already borrowed.");
 
         LocalDate borrowDate = today();
-        LocalDate dueDate = borrowDate.plusDays(28);
+        LocalDate dueDate = borrowDate.plusDays(BOOK_LOAN_DAYS);
 
         Loan loan = new Loan(user, book, borrowDate, dueDate);
 
@@ -112,7 +111,7 @@ public class LoanService {
             throw new IllegalStateException("CD already borrowed.");
 
         LocalDate borrowDate = today();
-        LocalDate due = borrowDate.plusDays(7);
+        LocalDate due = borrowDate.plusDays(CD_LOAN_DAYS);
 
         LoanCD loan = new LoanCD(user, cd, borrowDate, due);
         cd.setBorrowed(true);
