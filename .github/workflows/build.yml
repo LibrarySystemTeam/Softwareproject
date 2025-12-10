@@ -6,34 +6,29 @@ on:
 
 jobs:
   build-on-ubuntu:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
 
-      # Step 1 - Checkout master branch from GitHub
       - name: Step 1 - Checkout master branch from GitHub
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # Step 2 - Set up JDK 17
       - name: Step 2 - Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: 17
           distribution: 'zulu'
 
-      # Step 3 - Build Maven Project (skip tests for speed)
       - name: Step 3 - Build Maven Project
+        working-directory: ./LibrarySystem
         run: mvn --batch-mode clean install -DskipTests
 
-      # Step 4 - Run test cases
       - name: Step 4 - Run test cases
+        working-directory: ./LibrarySystem
         run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
 
-      # Step 5 - Cache SonarQube packages
       - name: Step 5 - Cache SonarQube packages
         uses: actions/cache@v4
         with:
@@ -41,7 +36,6 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
-      # Step 6 - Cache Maven packages
       - name: Step 6 - Cache Maven packages
         uses: actions/cache@v4
         with:
@@ -49,10 +43,10 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      # Step 7 - Build and analyze with SonarQube + Jacoco
       - name: Step 7 - Build and analyze with SonarQube
+        working-directory: ./LibrarySystem
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B jacoco:prepare-agent verify \
              org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
