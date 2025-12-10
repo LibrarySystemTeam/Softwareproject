@@ -36,10 +36,7 @@ public class LoanRepository {
     /** List containing all CD loan records. */
     private List<LoanCD> cdLoans = new ArrayList<>();
 
-    // ============================================================
-    //                   BOOK LOAN OPERATIONS
-    // ============================================================
-
+   
     /**
      * Adds a book loan to the repository.
      * <p>
@@ -82,10 +79,7 @@ public class LoanRepository {
         return bookLoans;
     }
 
-    // ============================================================
-    //                    CD LOAN OPERATIONS
-    // ============================================================
-
+    
     /**
      * Adds a CD loan to the repository.
      *
