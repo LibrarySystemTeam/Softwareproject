@@ -46,6 +46,7 @@ jobs:
       - name: Step 7 - Build and analyze with SonarQube
         working-directory: ./LibrarySystem
         env:
+          EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B jacoco:prepare-agent verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar jacoco:report -Dsonar.coverage.exclusions=**/main.java -Dsonar.projectKey=librarysystemteam_softwareproject
